@@ -7,9 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:alpha="1"
-    android:background="@color/purple_200"
+    android:background="@color/background_light"
     android:padding="5dp"
-    app:cardBackgroundColor="@color/purple_200"
+    app:cardBackgroundColor="@color/item_light"
     app:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -18,38 +18,75 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView"-->
-        <!--            android:layout_width="10dp"-->
-        <!--            android:layout_height="30dp"-->
-        <!--            android:layout_gravity="center_vertical"-->
-        <!--            app:srcCompat="@drawable/ic_launcher_background"-->
-        <!--            tools:ignore="VectorDrawableCompat"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--           />-->
-        <EditText
-            android:id="@+id/id_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:inputType="textPersonName" />
+        <LinearLayout
 
-        <TextView
-            android:id="@+id/note_title_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:weightSum="100">
 
-        <TextView
-            android:id="@+id/note_content_text"
+            <!--        <ImageView-->
+            <!--            android:id="@+id/imageView"-->
+            <!--            android:layout_width="10dp"-->
+            <!--            android:layout_height="30dp"-->
+            <!--            android:layout_gravity="center_vertical"-->
+            <!--            app:srcCompat="@drawable/ic_launcher_background"-->
+            <!--            tools:ignore="VectorDrawableCompat"-->
+            <!--            android:layout_marginLeft="10dp"-->
+            <!--           />-->
+
+
+            <TextView
+                android:id="@+id/note_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="10dp"
+                android:layout_weight="100"
+                android:text="TextView"
+                android:textColor="@color/text_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+<!--            <CheckBox-->
+<!--                android:id="@+id/note_checkBox"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/text_light"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+<!--            <ImageButton-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:id="@+id/note_delete"-->
+<!--                app:srcCompat="@drawable/delete" />-->
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="TextView"
-            android:textSize="18sp" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/id_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/note_content_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="TextView"
+                android:textColor="@color/text_light"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
