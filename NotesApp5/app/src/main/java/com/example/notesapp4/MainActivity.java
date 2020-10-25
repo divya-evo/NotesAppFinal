@@ -3,18 +3,19 @@ package com.example.notesapp4;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,7 +30,11 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
     ArrayList<String> noteId, noteTitle, noteContent;
-
+    // night mode
+    private Switch modeSwitch;
+    public static final String MyPreferences = "nightModePref";
+    public static final String Key_IsNightMode = "isNightMode";
+    SharedPreferences sharedPreferences;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview);
         addButton = findViewById(R.id.add_button);
+        // night mode
+        modeSwitch = findViewById(R.id.switch_mode);
+        sharedPreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
         /**************************************** ADD BUTTON ****************************************/
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +82,32 @@ public class MainActivity extends AppCompatActivity {
 //        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
 //        list.add(new RecyclerEntity("This is the best title", "some random text", false));
 //        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
+
+        /**************************************** SWITCH MODE ****************************************/
+        checkNightModeActivated();
+        modeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                saveNightModeState(true);
+                recreate();
+
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                saveNightModeState(false);
+                recreate();
+            }
+        });
     }
 
     /**************************************** DATABASE ****************************************/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1){
+        if (requestCode == 1) {
             recreate();
         }
     }
+
     void storeInArray() {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
@@ -97,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        //... rest of the list items
+    //... rest of the list items
 
 //        adapter = new RecyclerAdapter(this, list);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -155,8 +179,20 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    /**************************************** SWITCH MODE ****************************************/
+    private void saveNightModeState(boolean nightMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Key_IsNightMode, nightMode);
+        editor.apply();
+    }
 
-
-
-
+    public void checkNightModeActivated() {
+        if (sharedPreferences.getBoolean(Key_IsNightMode, false)) {
+            modeSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            modeSwitch.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 }

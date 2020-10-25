@@ -82,7 +82,8 @@
 
 
             android:text="UPDATE"
-            app:backgroundTint="@color/purple_200" />
+            android:textColor="@color/text_light"
+            app:backgroundTint="@color/item_light" />
 
         <Button
             android:id="@+id/deleteNote_button"
@@ -93,8 +94,9 @@
 
 
             android:text="DELETE"
-            app:backgroundTint="@color/purple_200"
-            app:iconTint="#FFFFFF" />
+            android:textColor="@color/text_light"
+            app:backgroundTint="@color/item_light"
+            app:iconTint="@color/background_light" />
 
 
     </LinearLayout>
