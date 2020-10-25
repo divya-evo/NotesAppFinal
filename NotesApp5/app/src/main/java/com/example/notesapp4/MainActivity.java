@@ -75,11 +75,25 @@ public class MainActivity extends AppCompatActivity {
 //        list.add(new RecyclerEntity("This is the best title", "some random text", false));
 //        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
     }
+
+    /**************************************** DATABASE ****************************************/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1){
             recreate();
+        }
+    }
+    void storeInArray() {
+        Cursor cursor = myDB.readAllData();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "No data to display", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                noteId.add(cursor.getString(0));
+                noteTitle.add(cursor.getString(1));
+                noteContent.add(cursor.getString(2));
+            }
         }
     }
 
@@ -141,18 +155,8 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-        void storeInArray() {
-            Cursor cursor = myDB.readAllData();
-            if (cursor.getCount() == 0) {
-                Toast.makeText(this, "No data to display", Toast.LENGTH_SHORT).show();
-            } else {
-                while (cursor.moveToNext()) {
-                    noteId.add(cursor.getString(0));
-                    noteTitle.add(cursor.getString(1));
-                    noteContent.add(cursor.getString(2));
-                }
-            }
-        }
+
+
 
 
 }
