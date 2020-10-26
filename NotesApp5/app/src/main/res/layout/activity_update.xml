@@ -71,7 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
 
         <Button
             android:id="@+id/updateNote_button"
@@ -89,11 +91,17 @@
             android:id="@+id/deleteNote_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_margin="5dp"
-
-
             android:text="DELETE"
+            android:textColor="@color/text_light"
+            app:backgroundTint="@color/item_light"
+            app:iconTint="@color/background_light" />
+        <Button
+            android:id="@+id/shareNote_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="SHARE"
             android:textColor="@color/text_light"
             app:backgroundTint="@color/item_light"
             app:iconTint="@color/background_light" />

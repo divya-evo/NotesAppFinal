@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<RecyclerEntity> list;
     RecyclerAdapter adapter;
+    RecyclerAdapter.MyViewHolder holder;
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
     private SQLiteDatabase database;

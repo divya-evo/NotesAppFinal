@@ -23,6 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     List<RecyclerEntity> list;
     private final ArrayList<NoteItem> myValues;
+    NoteItem noteItem;
     Context context;
     Activity activity;
     MyDatabaseHelper db;
@@ -82,7 +83,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //       holder.noteIdText.setText(String.valueOf(noteIdArray.get(position)));
 //       holder.noteTitleText.setText(String.valueOf(noteTitleArray.get(position)));
 //       holder.noteContentText.setText(String.valueOf(noteContentArray.get(position)));
-
         holder.noteIdText.setText(myValues.get(position).getId());
         holder.noteTitleText.setText(myValues.get(position).getTitle());
         holder.noteContentText.setText(myValues.get(position).getContent());
@@ -149,6 +149,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     }
 
+
+
     @Override
     public int getItemCount() {
         //return list.size();
@@ -182,11 +184,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyDataSetChanged();
     }
 
-    public void deleteItem(int adapterPosition) {
-
-        list.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
-    }
+//    public void deleteItem(int adapterPosition) {
+//
+//        list.remove(adapterPosition);
+//        notifyItemRemoved(adapterPosition);
+//    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView noteIdText, noteTitleText, noteContentText;
