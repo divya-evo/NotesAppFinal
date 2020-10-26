@@ -8,9 +8,10 @@ public class NoteItem {
     public NoteItem() {
     }
 
-    public NoteItem(String title, String content) {
+    public NoteItem(String title, String content, boolean showMenu) {
         this.title = title;
         this.content = content;
+        this.showMenu = showMenu;
         this.id = id;
     }
 

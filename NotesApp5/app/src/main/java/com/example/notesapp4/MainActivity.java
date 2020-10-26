@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     MyDatabaseHelper myDB;
     ArrayList<String> noteId, noteTitle, noteContent;
     ArrayList<NoteItem> myValues = new ArrayList<>();
+    private boolean showMenu = false;
 
     // night mode
     private Switch modeSwitch;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         modeSwitch = findViewById(R.id.switch_mode);
         sharedPreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
 
-        copyDBToSDCard();
+        //copyDBToSDCard();
         /**************************************** ADD BUTTON ****************************************/
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
                 //  noteContent.add(cursor.getString(2));
                 String str1 = cursor.getString(1);
                 String str2 = cursor.getString(2);
-                NoteItem d = new NoteItem(str1, str2);
+
+                NoteItem d = new NoteItem(str1, str2, false);
                 myValues.add(d);
 
 
