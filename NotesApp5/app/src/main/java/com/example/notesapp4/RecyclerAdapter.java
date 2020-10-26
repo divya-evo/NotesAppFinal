@@ -66,7 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         if(viewType==SHOW_MENU){
             v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
 
-            return new MyViewHolder(v);
+            return new MenuViewHolder(v);
         }else{
             v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
             return new MyViewHolder(v);
@@ -117,15 +117,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //            ((MyViewHolder)holder).noteContent.setText(entity.getTitle());
 //            //((MyViewHolder)holder).imageView.setImageDrawable(context.getResources().getDrawable(entity.getImage()));
 
-//            holder.container.setOnLongClickListener(new View.OnLongClickListener() {
-//
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    showMenu(position);
-//                    return true;
-//
-//                }
-//            });
+            holder.container.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    showMenu(position);
+                    return true;
+
+                }
+            });
 //
 //            ((MyViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -167,8 +167,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
 
     public boolean isMenuShown() {
-        for(int i=0; i<list.size(); i++){
-            if(list.get(i).isShowMenu()){
+        for(int i=0; i<myValues.size(); i++){
+            if(myValues.get(i).isShowMenu()){
                 return true;
             }
         }

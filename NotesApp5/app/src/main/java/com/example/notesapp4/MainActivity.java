@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter adapter;
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
+    private SQLiteDatabase database;
     ArrayList<String> noteId, noteTitle, noteContent;
     ArrayList<NoteItem> myValues = new ArrayList<>();
     private boolean showMenu = false;
@@ -74,11 +76,13 @@ public class MainActivity extends AppCompatActivity {
         /**************************************** DISPLAY DATA ****************************************/
         // initialise arrays to display data
         myDB = new MyDatabaseHelper(MainActivity.this);
-        noteId = new ArrayList<>();
-        noteTitle = new ArrayList<>();
-        noteContent = new ArrayList<>();
-        storeInArray();
-        Log.i("print array", String.valueOf(myValues));
+        database = myDB.getWritableDatabase();
+        myValues = myDB.getAllNotes();
+//        noteId = new ArrayList<>();
+//        noteTitle = new ArrayList<>();
+//        noteContent = new ArrayList<>();
+        //storeInArray();
+//        Log.i("print array", String.valueOf(myValues));
         // adapter = new RecyclerAdapter(MainActivity.this, this, noteId, noteTitle, noteContent);
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
@@ -200,7 +204,9 @@ public class MainActivity extends AppCompatActivity {
                 String str2 = cursor.getString(2);
 
                 NoteItem d = new NoteItem(str1, str2, false);
-                myValues.add(d);// set new id
+                myValues.add(d);
+                //d.setId(myDB.getNewestId());
+                // set new id
 
 
             }
@@ -225,37 +231,5 @@ public class MainActivity extends AppCompatActivity {
             modeSwitch.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-    }
-
-    /**************************************** COPY TO ANDROID ****************************************/
-    public void copyDBToSDCard() {
-        try {
-            File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
-
-            if (sd.canWrite()) {
-                String currentDBPath = "//data//"+getPackageName()+"//databases//"+ "NoteLibrary.db" +"";
-                String backupDBPath = "backupname.db";
-                File currentDB = new File(data, currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
-
-                if (currentDB.exists()) {
-                    FileChannel src = new FileInputStream(currentDB).getChannel();
-                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                    src.close();
-                    dst.close();
-                }
-
-            }
-            Toast.makeText(this,
-                    "Database Saved", Toast.LENGTH_LONG).show();
-        }  catch (Exception e) {
-            Toast.makeText(this,
-                    "Error="+e, Toast.LENGTH_LONG).show();
-            Log.i("FO","exception="+e);
-        }
-
-
     }
 }

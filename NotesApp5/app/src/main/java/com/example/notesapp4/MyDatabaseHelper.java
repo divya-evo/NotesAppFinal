@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "NoteLibrary.db";
@@ -44,20 +46,65 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    public ArrayList<NoteItem> getAllNotes(){
+        String tableName = TABLE_NAME;
+        String[] columns = {"_id", "note_title", "note_content"};
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ArrayList<NoteItem> storeNotes = new ArrayList<>();
+        Cursor cursor = db.query(
+                tableName,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        if (cursor.moveToFirst()){
+            do {
+                String id = cursor.getString(0);
+                String title = cursor.getString(1);
+                String content = cursor.getString(2);
+
+                // Add cursor row to storeNotes
+                storeNotes.add(new NoteItem( title, content, false));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return storeNotes;
+    }
     //String id,
-    public void addNote( String title, String content){
+//    public void addNote( String title, String content){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues cv = new ContentValues();
+//
+//        //cv.put(COLUMN_ID, id);
+//        cv.put(COLUMN_TITLE, title);
+//        cv.put(COLUMN_CONTENT, content);
+//       long result =  db.insert(TABLE_NAME, null, cv);
+//       if(result == -1){
+//           Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+//       } else {
+//           Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show();
+//       }
+//    }
+
+    public void addNote(NoteItem noteItem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         //cv.put(COLUMN_ID, id);
-        cv.put(COLUMN_TITLE, title);
-        cv.put(COLUMN_CONTENT, content);
-       long result =  db.insert(TABLE_NAME, null, cv);
-       if(result == -1){
-           Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-       } else {
-           Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show();
-       }
+        cv.put(COLUMN_TITLE, noteItem.getTitle());
+        cv.put(COLUMN_CONTENT, noteItem.getContent());
+        long result =  db.insert(TABLE_NAME, null, cv);
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Added successfully!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     Cursor readAllData(){
@@ -70,6 +117,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         }
         return cursor;
+    }
+    public String getNewestId() {
+        String id = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = TABLE_NAME;
+        String[] columns = {"MAX(_id)"};
+        Cursor cursor = db.query(
+                tableName,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "1");
+
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getString(0);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return id;
     }
 
     void updateData(String id, String title, String content){

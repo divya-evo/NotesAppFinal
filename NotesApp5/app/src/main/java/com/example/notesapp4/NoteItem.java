@@ -14,6 +14,12 @@ public class NoteItem {
         this.showMenu = showMenu;
         this.id = id;
     }
+    public NoteItem(String id, String title, String content, boolean showMenu) {
+        this.title = title;
+        this.content = content;
+        this.showMenu = showMenu;
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
