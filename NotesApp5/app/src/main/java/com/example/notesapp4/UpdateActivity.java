@@ -11,10 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class UpdateActivity extends AppCompatActivity {
     EditText idInput, titleInput, contentInput;
     Button updateNoteButton, deleteNoteButton;
     String title, content, id;
+    ArrayList<NoteItem> myValues = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +34,10 @@ public class UpdateActivity extends AppCompatActivity {
         getAndSetIntentData();
 
         //set action bar
-        ActionBar ab = getSupportActionBar();
-        if(ab != null){
-            ab.setTitle(title);
-        }
+//        ActionBar ab = getSupportActionBar();
+//        if(ab != null){
+//            ab.setTitle();
+//        }
 
         updateNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +56,6 @@ public class UpdateActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 
