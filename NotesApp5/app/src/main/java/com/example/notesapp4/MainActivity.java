@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +22,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -37,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     List<RecyclerEntity> list;
     RecyclerAdapter adapter;
     RecyclerAdapter.MyViewHolder holder;
+    LinearLayout container;
     FloatingActionButton addButton;
+    Button updateButton, shareButton, deleteButton;
     MyDatabaseHelper myDB;
     private SQLiteDatabase database;
     ArrayList<String> noteId, noteTitle, noteContent;
@@ -50,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
     public static final String Key_IsNightMode = "isNightMode";
     SharedPreferences sharedPreferences;
 
+    // collapsible menu
+    LinearLayout mLinearLayout;
+    LinearLayout mLinearLayoutHeader;
+    FloatingActionButton collapseButton;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -58,21 +70,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerview);
+        container = findViewById(R.id.container);
         addButton = findViewById(R.id.add_button);
+        updateButton = findViewById(R.id.updateNote_button);
+        shareButton = findViewById(R.id.shareNote_button);
+        deleteButton = findViewById(R.id.deleteNote_button);
+
         // night mode
         modeSwitch = findViewById(R.id.switch_mode);
         sharedPreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
 
         //copyDBToSDCard();
-        /**************************************** ADD BUTTON ****************************************/
+        /**************************************** BUTTON CLICK LISTENERS ****************************************/
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
+//                startActivity(intent);
 
             }
         });
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                startActivityForResult(intent, 3);
+            }
+        });
+
+
 
         /**************************************** DISPLAY DATA ****************************************/
         // initialise arrays to display data
@@ -90,17 +117,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
 
-        /**************************************** LIST ITEMS ****************************************/
-//        list = new ArrayList<>();
-//
-//        list.add(new RecyclerEntity("This is the best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the best title", "some random text", false));
-//        list.add(new RecyclerEntity("This is the second-best title", "some random text", false));
 
         /**************************************** SWITCH MODE ****************************************/
         checkNightModeActivated();
@@ -126,52 +142,71 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setAdapter(adapter);
 
-        ItemTouchHelper.SimpleCallback touchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            private final ColorDrawable background = new ColorDrawable(getResources().getColor(R.color.purple_200));
+//        ItemTouchHelper.SimpleCallback touchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+//            private final ColorDrawable background = new ColorDrawable(getResources().getColor(R.color.purple_200));
+//
+//            @Override
+//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+//                adapter.showMenu(viewHolder.getAdapterPosition());
+//                // adapter.deleteItem(viewHolder.getAdapterPosition());
+//            }
+//
+//            @Override
+//            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//
+//                View itemView = viewHolder.itemView;
+//
+//                if (dX > 0) {
+//                    background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + ((int) dX), itemView.getBottom());
+//                } else if (dX < 0) {
+//                    background.setBounds(itemView.getRight() + ((int) dX), itemView.getTop(), itemView.getRight(), itemView.getBottom());
+//                } else {
+//                    background.setBounds(0, 0, 0, 0);
+//                }
+//
+//                background.draw(c);
+//            }
+//        };
+//
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(touchHelperCallback);
+//        itemTouchHelper.attachToRecyclerView(recyclerView);
+//
+//        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener()
+//
+//        {
+//            @Override
+//            public void onScrollChange (View v,int scrollX, int scrollY, int oldScrollX, int oldScrollY)
+//            {
+//                adapter.closeMenu();
+//            }
+//        });
+//
+        /**************************************** COLLAPSIBLE MENU ****************************************/
+        mLinearLayout = (LinearLayout) findViewById(R.id.expandable);
+        //set visibility to GONE
+        mLinearLayout.setVisibility(View.INVISIBLE);
+        mLinearLayoutHeader = (LinearLayout) findViewById(R.id.header);
+        collapseButton = findViewById(R.id.collapseButton);
+
+        collapseButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.showMenu(viewHolder.getAdapterPosition());
-                // adapter.deleteItem(viewHolder.getAdapterPosition());
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
-                View itemView = viewHolder.itemView;
-
-                if (dX > 0) {
-                    background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + ((int) dX), itemView.getBottom());
-                } else if (dX < 0) {
-                    background.setBounds(itemView.getRight() + ((int) dX), itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                } else {
-                    background.setBounds(0, 0, 0, 0);
+            public void onClick(View v) {
+                if (mLinearLayout.getVisibility()==View.INVISIBLE){
+                    expand();
+                }else{
+                    collapse();
                 }
-
-                background.draw(c);
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(touchHelperCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener()
-
-        {
-            @Override
-            public void onScrollChange (View v,int scrollX, int scrollY, int oldScrollX, int oldScrollY)
-            {
-                adapter.closeMenu();
             }
         });
-
     }
+
     @Override
     public void onBackPressed() {
         if (adapter.isMenuShown()) {
@@ -186,8 +221,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // updating
         if (requestCode == 1) {
             recreate();
+        }
+        // creating
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                String titleText = data.getStringExtra("Title Text");
+                String contentText = data.getStringExtra("Content Text");
+
+                NoteItem newNote = new NoteItem(titleText, contentText, false);
+                myDB.addNote(newNote);
+                myValues.add(newNote);
+                adapter.notifyItemInserted(myValues.indexOf(newNote));
+                newNote.setId(myDB.getNewestId());
+            }
         }
     }
 
@@ -233,4 +282,63 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
+    /**************************************** COLLAPSIBLE MENU ****************************************/
+    private void expand() {
+        //set Visible
+        mLinearLayout.setVisibility(View.VISIBLE);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        mLinearLayout.measure(widthSpec, heightSpec);
+
+        ValueAnimator mAnimator = slideAnimator(0, mLinearLayout.getMeasuredHeight());
+        mAnimator.start();
+    }
+
+    private void collapse() {
+        int finalHeight = mLinearLayout.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator(finalHeight, 0);
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                //Height=0, but it set visibility to GONE
+                mLinearLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+
+        });
+        mAnimator.start();
+    }
+
+    private ValueAnimator slideAnimator(int start, int end) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
+                layoutParams.height = value;
+                mLinearLayout.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
+
 }

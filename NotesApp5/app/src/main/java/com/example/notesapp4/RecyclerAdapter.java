@@ -62,16 +62,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-//        v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-//        return new MyViewHolder(v);
-        if(viewType==SHOW_MENU){
-            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
-
-            return new MenuViewHolder(v);
-        }else{
-            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-            return new MyViewHolder(v);
-        }
+        v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+        return new MyViewHolder(v);
+//        if(viewType==SHOW_MENU){
+//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
+//
+//            return new MenuViewHolder(v);
+//        }else{
+//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+//            return new MyViewHolder(v);
+//        }
     }
 
 

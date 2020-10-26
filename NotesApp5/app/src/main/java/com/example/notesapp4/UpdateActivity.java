@@ -68,7 +68,7 @@ public class UpdateActivity extends AppCompatActivity {
                 Log.i("sharing", shareNote.getTitle());
                 intent.putExtra(Intent.EXTRA_TEXT, "I would like to share my Note named: " + shareNote.getTitle() + "\n Here is the relevant information "
                         + shareNote.getContent());
-                intent.setType("text/bold");
+                intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, "Share Note"));
             }
         });
