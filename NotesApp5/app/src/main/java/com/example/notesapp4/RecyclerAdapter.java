@@ -39,7 +39,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //    }
 
 //    public RecyclerAdapter(Activity activity, Context context, ArrayList noteIdArray, ArrayList noteTitleArray, ArrayList noteContentArray) {
-    public RecyclerAdapter(Context context, ArrayList<NoteItem> myValues) {
+    public RecyclerAdapter(Activity activity, Context context, ArrayList<NoteItem> myValues) {
         this.activity = activity;
         this.context = context;
         this.myValues = myValues;
@@ -96,7 +96,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, myValues.get(position).getTitle() , Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(context, UpdateActivity.class);
 //                intent.putExtra("id", String.valueOf(noteIdArray.get(position)));
 //                intent.putExtra("title", String.valueOf(noteTitleArray.get(position)));

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         storeInArray();
         Log.i("print array", String.valueOf(myValues));
         // adapter = new RecyclerAdapter(MainActivity.this, this, noteId, noteTitle, noteContent);
-        adapter = new RecyclerAdapter(this, myValues);
+        adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 String str2 = cursor.getString(2);
 
                 NoteItem d = new NoteItem(str1, str2, false);
-                myValues.add(d);
+                myValues.add(d);// set new id
 
 
             }

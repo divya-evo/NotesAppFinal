@@ -71,6 +71,7 @@ public class UpdateActivity extends AppCompatActivity {
             titleInput.setText(title);
             contentInput.setText(content);
 
+
         }else{
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
