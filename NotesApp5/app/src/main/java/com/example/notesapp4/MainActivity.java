@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerAdapter.MyViewHolder holder;
     LinearLayout container;
-    FloatingActionButton addButton;
+    FloatingActionButton addButton, transformButton;
 
     MyDatabaseHelper myDB;
     private SQLiteDatabase database;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         container = findViewById(R.id.container);
         addButton = findViewById(R.id.add_button);
+        transformButton = findViewById(R.id.transform_button);
 
 
         // night mode
@@ -96,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         // adapter = new RecyclerAdapter(MainActivity.this, this, noteId, noteTitle, noteContent);
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
 
         /**************************************** BUTTON CLICK LISTENERS ****************************************/
@@ -109,6 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        transformButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 //        holder.container.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -146,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         /**************************************** SWITCH MODE ****************************************/
         checkNightModeActivated();
         modeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+            if(isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 saveNightModeState(true);
                 recreate();
@@ -435,5 +446,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+
 
 }

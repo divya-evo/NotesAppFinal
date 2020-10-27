@@ -28,14 +28,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     Activity activity;
     MyDatabaseHelper db;
 
-    private OnItemClickListener mListener;
+    // change layout
+    private static final int LIST_ITEM = 0;
+    private static final int GRID_ITEM = 1;
+    boolean isSwitchView = true;
 
 
 
-    private final int SHOW_MENU = 1;
-    private final int HIDE_MENU = 2;
-    private static final String TAG = "RecyclerAdapter";
-    ArrayList<String> noteIdArray, noteTitleArray, noteContentArray;
 
 //    public RecyclerAdapter(Context context, List<RecyclerEntity> articlesList) {
 //        this.list = articlesList;
@@ -54,12 +53,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     }
 
-    public interface OnItemClickListener{
-        void onItemClick(int position);
-    }
-    //    public void setOnItemClickListener(OnItemClickListener listener){
-//        mListener = listener;
-//    }
+
 //    @Override
 //    public int getItemViewType(int position) {
 //        if(myValues.get(position).isShowMenu()){
@@ -71,18 +65,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+//
+//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
 //        MyViewHolder mvh = new MyViewHolder(v);
 //        return mvh;
-        if(viewType==SHOW_MENU){
-            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
-
-            return new MenuViewHolder(v);
-        }else{
+        View v;
+        if(viewType==LIST_ITEM){
             v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-            return new MyViewHolder(v);
+
+        }else{
+            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
+
         }
+        return new MyViewHolder(v);
     }
 
 

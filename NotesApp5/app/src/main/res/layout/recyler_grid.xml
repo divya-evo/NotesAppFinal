@@ -3,13 +3,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:alpha="1"
     android:background="@color/background_light"
     android:padding="5dp"
     app:cardBackgroundColor="@color/item_light"
+    android:orientation="vertical"
     app:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -25,15 +26,6 @@
             android:layout_height="match_parent"
             android:weightSum="100">
 
-            <!--        <ImageView-->
-            <!--            android:id="@+id/imageView"-->
-            <!--            android:layout_width="10dp"-->
-            <!--            android:layout_height="30dp"-->
-            <!--            android:layout_gravity="center_vertical"-->
-            <!--            app:srcCompat="@drawable/ic_launcher_background"-->
-            <!--            tools:ignore="VectorDrawableCompat"-->
-            <!--            android:layout_marginLeft="10dp"-->
-            <!--           />-->
 
 
             <TextView
@@ -48,19 +40,12 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!--            <CheckBox-->
-            <!--                android:id="@+id/note_checkBox"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:textColor="@color/text_light"-->
-            <!--                android:visibility="invisible"-->
-            <!--                />-->
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="5dp"
-                            android:id="@+id/note_imp"
-                            app:srcCompat="@drawable/important" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/note_imp"
+                app:srcCompat="@drawable/important" />
 
 
 
@@ -70,16 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--            <EditText-->
-            <!--                android:id="@+id/id_input"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:inputType="textPersonName"-->
-            <!--                android:visibility="invisible" />-->
 
             <TextView
                 android:id="@+id/note_content_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:text="TextView"
