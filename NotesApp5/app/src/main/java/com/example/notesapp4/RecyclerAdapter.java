@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private static final int LIST_ITEM = 0;
     private static final int GRID_ITEM = 1;
     boolean isSwitchView = true;
+
+    //animation
+    Animation translate_anim;
 
 
 
@@ -66,18 +71,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //
-//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
-//        MyViewHolder mvh = new MyViewHolder(v);
-//        return mvh;
-        View v;
-        if(viewType==LIST_ITEM){
-            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-
-        }else{
-            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
-
-        }
-        return new MyViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+        MyViewHolder mvh = new MyViewHolder(v);
+        return mvh;
+//        View v;
+//        if(viewType==LIST_ITEM){
+//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+//
+//        }else{
+//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
+//
+//        }
+//        return new MyViewHolder(v);
     }
 
 
@@ -86,10 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     //    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-//       holder.noteIdText.setText(String.valueOf(noteIdArray.get(position)));
-//       holder.noteTitleText.setText(String.valueOf(noteTitleArray.get(position)));
-//       holder.noteContentText.setText(String.valueOf(noteContentArray.get(position)));
-//        holder.noteIdText.setText(myValues.get(position).getId());
+
         holder.noteTitleText.setText(myValues.get(position).getTitle());
         holder.noteContentText.setText(myValues.get(position).getContent());
         String id = myValues.get(position).getId();
@@ -119,8 +121,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             @Override
             public void onClick(View v) {
 
-                //int position = holder.getAdapterPosition();
-                // Log.i("check value",  myValues.get(position).getId());
 
                 Intent intent = new Intent(context, UpdateActivity.class);
                 // int position = holder.getAdapterPosition();
@@ -156,7 +156,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             @Override
             public boolean onLongClick(View v) {
                 Log.i("clickled", "click");
-                showMenu(position);
+                //showMenu(position);
                 return true;
 
             }
@@ -194,38 +194,48 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
 
-    public void showMenu(int position) {
-        for(int i=0; i<myValues.size(); i++){
-            myValues.get(i).setShowMenu(false);
-        }
-        myValues.get(position).setShowMenu(true);
-        notifyDataSetChanged();
-    }
-
-
-    public boolean isMenuShown() {
-        for(int i=0; i<myValues.size(); i++){
-            if(myValues.get(i).isShowMenu()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void closeMenu() {
-        for(int i=0; i<myValues.size(); i++){
-            myValues.get(i).setShowMenu(false);
-        }
-        notifyDataSetChanged();
-    }
-
-//    public void deleteItem(int adapterPosition) {
+//    public void showMenu(int position) {
+//        for(int i=0; i<myValues.size(); i++){
+//            myValues.get(i).setShowMenu(false);
+//        }
+//        myValues.get(position).setShowMenu(true);
+//        notifyDataSetChanged();
+//    }
 //
-//        list.remove(adapterPosition);
-//        notifyItemRemoved(adapterPosition);
+//
+//    public boolean isMenuShown() {
+//        for(int i=0; i<myValues.size(); i++){
+//            if(myValues.get(i).isShowMenu()){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public void closeMenu() {
+//        for(int i=0; i<myValues.size(); i++){
+//            myValues.get(i).setShowMenu(false);
+//        }
+//        notifyDataSetChanged();
 //    }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+    @Override
+    public int getItemViewType (int position) {
+        if (isSwitchView){
+            return LIST_ITEM;
+        }else{
+            return GRID_ITEM;
+        }
+    }
+
+    public boolean toggleItemViewType () {
+        isSwitchView = !isSwitchView;
+        return isSwitchView;
+    }
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView noteIdText, noteTitleText, noteContentText;
         public int position = 0;
 
@@ -242,19 +252,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             container = itemView.findViewById(R.id.container);
             updateLayout = itemView.findViewById(R.id.updateLayout);
 
-            itemView.setClickable(true);
+            //animation
+            translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);
+            container.setAnimation(translate_anim);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(listener != null){
-//                        int position = getAdapterPosition();
-//                        if(position != RecyclerView.NO_POSITION){
-//                            listener.onItemClick(position);
-//                        }
-//                    }
-//                }
-//            });
+
+
+
         }
     }
     public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{

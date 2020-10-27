@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mLinearLayoutHeader;
     FloatingActionButton collapseButton;
 
+    // change layout
+    boolean isList = true;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -98,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         // adapter = new RecyclerAdapter(MainActivity.this, this, noteId, noteTitle, noteContent);
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
         new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
 
         /**************************************** BUTTON CLICK LISTENERS ****************************************/
@@ -117,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(!isList){
+                    recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    isList = true;
+
+                } else {
+                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    isList = false;
+                }
             }
         });
 
@@ -245,14 +257,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onBackPressed() {
-        if (adapter.isMenuShown()) {
-            adapter.closeMenu();
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (adapter.isMenuShown()) {
+//            adapter.closeMenu();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
 
     /**************************************** DATABASE ****************************************/
