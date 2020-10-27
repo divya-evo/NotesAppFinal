@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String titleText = data.getStringExtra("title new");
                 String contentText = data.getStringExtra("content new");
-
+                int position = data.getIntExtra("note position", -1);
                 NoteItem updateNote = new NoteItem(titleText, contentText, false);
                 myDB.updateData(updateNote);
                 adapter.notifyDataSetChanged();

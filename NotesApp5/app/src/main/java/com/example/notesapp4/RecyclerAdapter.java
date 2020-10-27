@@ -133,6 +133,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 intent.putExtra("id", myValues.get(position).getId());
                 intent.putExtra("title", myValues.get(position).getTitle());
                 intent.putExtra("content", myValues.get(position).getContent());
+                intent.putExtra("note position", position);
                 activity.startActivityForResult(intent, 3);
             }
         });
