@@ -119,6 +119,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //            }
 //        });
 
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //int position = holder.getAdapterPosition();
+                Log.i("check value",  myValues.get(position).getTitle());
+
+                Intent intent = new Intent(context, UpdateActivity.class);
+                int position = holder.getAdapterPosition();
+                NoteItem noteItem = new NoteItem();
+                Log.i("check value",  myValues.get(position).getTitle());
+                intent.putExtra("id", myValues.get(position).getId());
+                intent.putExtra("title", myValues.get(position).getTitle());
+                intent.putExtra("content", myValues.get(position).getContent());
+                activity.startActivityForResult(intent, 3);
+            }
+        });
 
         //RecyclerEntity entity = list.get(position);
       //  myValues.get(position);
@@ -216,6 +233,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             //imageView = itemView.findViewById(R.id.imageView);
             container = itemView.findViewById(R.id.container);
             updateLayout = itemView.findViewById(R.id.updateLayout);
+
+            itemView.setClickable(true);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

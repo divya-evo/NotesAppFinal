@@ -110,23 +110,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int position = holder.getAdapterPosition();
-                Log.i("check value",  myValues.get(position).getTitle());
-
-//                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+//        holder.container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
 //                int position = holder.getAdapterPosition();
-//                NoteItem noteItem = new NoteItem();
 //                Log.i("check value",  myValues.get(position).getTitle());
-//                intent.putExtra("id", myValues.get(position).getId());
-//                intent.putExtra("title", myValues.get(position).getTitle());
-//                intent.putExtra("content", myValues.get(position).getContent());
-//                startActivityForResult(intent, 3);
-            }
-        });
+//
+////                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+////                int position = holder.getAdapterPosition();
+////                NoteItem noteItem = new NoteItem();
+////                Log.i("check value",  myValues.get(position).getTitle());
+////                intent.putExtra("id", myValues.get(position).getId());
+////                intent.putExtra("title", myValues.get(position).getTitle());
+////                intent.putExtra("content", myValues.get(position).getContent());
+////                startActivityForResult(intent, 3);
+//            }
+//        });
 
         adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("id", myValues.get(position).getId());
                 intent.putExtra("title", myValues.get(position).getTitle());
                 intent.putExtra("content", myValues.get(position).getContent());
-                startActivityForResult(intent, 3);
+                startActivityForResult(intent, 1);
             }
         });
 
