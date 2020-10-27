@@ -68,12 +68,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/id_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:visibility="invisible" />
+<!--            <EditText-->
+<!--                android:id="@+id/id_input"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:visibility="invisible" />-->
 
             <TextView
                 android:id="@+id/note_content_text"

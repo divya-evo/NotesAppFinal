@@ -16,7 +16,7 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        idInput = findViewById(R.id.id_input);
+      //  idInput = findViewById(R.id.id_input);
         titleInput = findViewById(R.id.title_input);
         contentInput = findViewById(R.id.content_input);
         addNoteButton = findViewById(R.id.addNote_button);

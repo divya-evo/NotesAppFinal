@@ -1,5 +1,6 @@
 package com.example.notesapp4;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter.MyViewHolder holder;
     LinearLayout container;
     FloatingActionButton addButton;
-    Button updateButton, shareButton, deleteButton;
+
     MyDatabaseHelper myDB;
     private SQLiteDatabase database;
-    ArrayList<String> noteId, noteTitle, noteContent;
+
     ArrayList<NoteItem> myValues = new ArrayList<>();
     private boolean showMenu = false;
 
@@ -73,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         container = findViewById(R.id.container);
         addButton = findViewById(R.id.add_button);
-//        updateButton = findViewById(R.id.updateNote_button);
-//        shareButton = findViewById(R.id.shareNote_button);
-//        deleteButton = findViewById(R.id.deleteNote_button);
+
 
         // night mode
         modeSwitch = findViewById(R.id.switch_mode);
@@ -98,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
 
         /**************************************** BUTTON CLICK LISTENERS ****************************************/
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivityForResult(intent, 2);
-//                startActivity(intent);
+
 
             }
         });
@@ -414,5 +414,26 @@ public class MainActivity extends AppCompatActivity {
         });
         return animator;
     }
+
+    /**************************************** ITEM TOUCH HELPER ****************************************/
+    ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Log.i("swiped", "yay");
+
+//            Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+//            String state = "DELETING";
+//            intent.putExtra("state", state);
+//            startActivityForResult(intent, 3);
+//            adapter.notifyDataSetChanged();
+
+        }
+
+    };
 
 }

@@ -71,17 +71,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-        MyViewHolder mvh = new MyViewHolder(v);
-        return mvh;
-//        if(viewType==SHOW_MENU){
-//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
-//
-//            return new MenuViewHolder(v);
-//        }else{
-//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-//            return new MyViewHolder(v);
-//        }
+        View v;
+//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+//        MyViewHolder mvh = new MyViewHolder(v);
+//        return mvh;
+        if(viewType==SHOW_MENU){
+            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
+
+            return new MenuViewHolder(v);
+        }else{
+            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+            return new MyViewHolder(v);
+        }
     }
 
 
@@ -93,7 +94,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //       holder.noteIdText.setText(String.valueOf(noteIdArray.get(position)));
 //       holder.noteTitleText.setText(String.valueOf(noteTitleArray.get(position)));
 //       holder.noteContentText.setText(String.valueOf(noteContentArray.get(position)));
-        holder.noteIdText.setText(myValues.get(position).getId());
+//        holder.noteIdText.setText(myValues.get(position).getId());
         holder.noteTitleText.setText(myValues.get(position).getTitle());
         holder.noteContentText.setText(myValues.get(position).getContent());
         String id = myValues.get(position).getId();
@@ -159,6 +160,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             @Override
             public boolean onLongClick(View v) {
+                Log.i("clickled", "click");
                 showMenu(position);
                 return true;
 
@@ -238,7 +240,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            noteIdText = itemView.findViewById(R.id.id_input);
+           // noteIdText = itemView.findViewById(R.id.id_input);
             noteTitleText = itemView.findViewById(R.id.note_title_text);
             noteContentText = itemView.findViewById(R.id.note_content_text);
             //imageView = itemView.findViewById(R.id.imageView);
@@ -260,11 +262,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //            });
         }
     }
-//    public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{
-//        public MenuViewHolder(View view){
-//            super(view);
-//        }
-//    }
+    public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{
+        public MenuViewHolder(View view){
+            super(view);
+        }
+    }
 
 
 }

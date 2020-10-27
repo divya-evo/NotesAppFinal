@@ -36,22 +36,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="40dp"
-        android:layout_weight="30"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="@color/add_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerview"
-        app:rippleColor="@color/white"
-        app:srcCompat="@drawable/add"
-        tools:ignore="VectorDrawableCompat" />
 
     <LinearLayout
         android:id="@+id/expandable"
@@ -59,8 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:animateLayoutChanges="true"
-        android:visibility="gone"
-        android:weightSum="90"
+        android:visibility="visible"
+        android:weightSum="100"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -72,27 +57,46 @@
             android:layout_marginStart="41dp"
             android:layout_marginLeft="41dp"
             android:layout_marginBottom="48dp"
-            android:layout_weight="30"
+            android:layout_weight="40"
+            android:switchPadding="-90dp"
+
             android:text="Dark Mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:id="@+id/add_button"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="16dp"-->
-        <!--            android:layout_marginRight="16dp"-->
-        <!--            android:layout_marginBottom="40dp"-->
-        <!--            android:layout_weight="30"-->
-        <!--            android:clickable="true"-->
-        <!--            android:focusable="true"-->
-        <!--            app:backgroundTint="@color/add_light"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="@+id/recyclerview"-->
-        <!--            app:rippleColor="@color/white"-->
-        <!--            app:srcCompat="@drawable/add"-->
-        <!--            tools:ignore="VectorDrawableCompat" />-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/colour_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="30"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTint="@color/add_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerview"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/color"
+            tools:ignore="VectorDrawableCompat" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="30"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTint="@color/add_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerview"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/add"
+            tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
 
