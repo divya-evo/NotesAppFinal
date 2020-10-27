@@ -28,6 +28,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     Activity activity;
     MyDatabaseHelper db;
 
+    private OnItemClickListener mListener;
+
+
 
     private final int SHOW_MENU = 1;
     private final int HIDE_MENU = 2;
@@ -45,10 +48,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         this.context = context;
         this.myValues = myValues;
         db = new MyDatabaseHelper(context);
-        this.noteIdArray = noteIdArray;
-        this.noteTitleArray = noteTitleArray;
-        this.noteContentArray = noteContentArray;
+//        this.noteIdArray = noteIdArray;
+//        this.noteTitleArray = noteTitleArray;
+//        this.noteContentArray = noteContentArray;
 
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
     }
     @Override
     public int getItemViewType(int position) {
@@ -61,9 +71,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
-        v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-        return new MyViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+        MyViewHolder mvh = new MyViewHolder(v, mListener);
+        return mvh;
 //        if(viewType==SHOW_MENU){
 //            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
 //
@@ -93,21 +103,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         //*****************UPDATE*********************
 
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, UpdateActivity.class);
-//                intent.putExtra("id", String.valueOf(noteIdArray.get(position)));
-//                intent.putExtra("title", String.valueOf(noteTitleArray.get(position)));
-//                intent.putExtra("content", String.valueOf(noteContentArray.get(position)));
-
-                intent.putExtra("id", String.valueOf(myValues.get(position).getId()));
-                intent.putExtra("title", String.valueOf(myValues.get(position).getTitle()));
-                intent.putExtra("content", String.valueOf(myValues.get(position).getContent()));
-               activity.startActivityForResult(intent, 1);
-            }
-        });
+//        holder.container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(context, UpdateActivity.class);
+////                intent.putExtra("id", String.valueOf(noteIdArray.get(position)));
+////                intent.putExtra("title", String.valueOf(noteTitleArray.get(position)));
+////                intent.putExtra("content", String.valueOf(noteContentArray.get(position)));
+//
+//                intent.putExtra("id", String.valueOf(myValues.get(position).getId()));
+//                intent.putExtra("title", String.valueOf(myValues.get(position).getTitle()));
+//                intent.putExtra("content", String.valueOf(myValues.get(position).getContent()));
+//               activity.startActivityForResult(intent, 1);
+//            }
+//        });
 
 
         //RecyclerEntity entity = list.get(position);
@@ -190,7 +200,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //        notifyItemRemoved(adapterPosition);
 //    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView noteIdText, noteTitleText, noteContentText;
         public int position = 0;
 
@@ -198,7 +208,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         LinearLayout container;
         LinearLayout updateLayout;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             noteIdText = itemView.findViewById(R.id.id_input);
             noteTitleText = itemView.findViewById(R.id.note_title_text);
@@ -206,13 +216,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             //imageView = itemView.findViewById(R.id.imageView);
             container = itemView.findViewById(R.id.container);
             updateLayout = itemView.findViewById(R.id.updateLayout);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
-    public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{
-        public MenuViewHolder(View view){
-            super(view);
-        }
-    }
+//    public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{
+//        public MenuViewHolder(View view){
+//            super(view);
+//        }
+//    }
 
 
 }

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<RecyclerEntity> list;
     RecyclerAdapter adapter;
+
     RecyclerAdapter.MyViewHolder holder;
     LinearLayout container;
     FloatingActionButton addButton;
@@ -81,24 +82,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
 
         //copyDBToSDCard();
-        /**************************************** BUTTON CLICK LISTENERS ****************************************/
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivityForResult(intent, 2);
-//                startActivity(intent);
-
-            }
-        });
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
-                startActivityForResult(intent, 3);
-            }
-        });
-
 
 
         /**************************************** DISPLAY DATA ****************************************/
@@ -115,6 +98,48 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        /**************************************** BUTTON CLICK LISTENERS ****************************************/
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                startActivityForResult(intent, 2);
+//                startActivity(intent);
+
+            }
+        });
+
+//        holder.container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                int position = holder.getAdapterPosition();
+//                Log.i("check value",  myValues.get(position).getTitle());
+//
+////                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+////                int position = holder.getAdapterPosition();
+////                NoteItem noteItem = new NoteItem();
+////                Log.i("check value",  myValues.get(position).getTitle());
+////                intent.putExtra("id", myValues.get(position).getId());
+////                intent.putExtra("title", myValues.get(position).getTitle());
+////                intent.putExtra("content", myValues.get(position).getContent());
+////                startActivityForResult(intent, 3);
+//            }
+//        });
+
+        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+
+                Log.i("check value",  myValues.get(position).getTitle());
+                intent.putExtra("id", myValues.get(position).getId());
+                intent.putExtra("title", myValues.get(position).getTitle());
+                intent.putExtra("content", myValues.get(position).getContent());
+                startActivityForResult(intent, 3);
+            }
+        });
 
 
 
@@ -207,6 +232,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     public void onBackPressed() {
         if (adapter.isMenuShown()) {
@@ -236,6 +263,17 @@ public class MainActivity extends AppCompatActivity {
                 myValues.add(newNote);
                 adapter.notifyItemInserted(myValues.indexOf(newNote));
                 newNote.setId(myDB.getNewestId());
+            }
+        }
+        //updating
+        if(requestCode == 3){
+            if (resultCode == RESULT_OK) {
+                String titleText = data.getStringExtra("Title Text Update");
+                String contentText = data.getStringExtra("Content Text Update");
+
+                NoteItem updateNote = new NoteItem(titleText, contentText, false);
+                myDB.updateData(updateNote);
+                adapter.notifyDataSetChanged();
             }
         }
     }

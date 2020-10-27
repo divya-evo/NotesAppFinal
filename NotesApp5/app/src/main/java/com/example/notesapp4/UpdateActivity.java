@@ -48,10 +48,16 @@ public class UpdateActivity extends AppCompatActivity {
                 String titleText = titleInput.getText().toString().trim();
                 String contentText = contentInput.getText().toString().trim();
 
-                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
-                // and then this
-                NoteItem updateNote = new NoteItem(titleText, contentText, false);
-                myDB.updateData(updateNote);
+                Intent intent = new Intent();
+                intent.putExtra("Title Text Update", titleText);
+                intent.putExtra("Content Text Update", contentText);
+                setResult(RESULT_OK, intent);
+                finish();
+
+//                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+//                // and then this
+//                NoteItem updateNote = new NoteItem(titleText, contentText, false);
+//                myDB.updateData(updateNote);
 
 //                myDB.updateData(id, title, content);
             }
@@ -72,10 +78,6 @@ public class UpdateActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, "Share Note"));
             }
         });
-
-
-
-
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     void getAndSetIntentData(){
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title") && getIntent().hasExtra("content") ){
+
 
             //getting data
             id =  getIntent().getStringExtra("id");
