@@ -21,6 +21,8 @@ public class UpdateActivity extends AppCompatActivity {
     String title, content, id;
     ArrayList<NoteItem> myValues = new ArrayList<>();
 
+    //states for updating and deleting
+    String state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +47,18 @@ public class UpdateActivity extends AppCompatActivity {
         updateNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                state ="UPDATING";
                 String titleText = titleInput.getText().toString().trim();
                 String contentText = contentInput.getText().toString().trim();
 
                 Intent intent = new Intent();
+                intent.putExtra("state", state);
                 intent.putExtra("title new", titleText);
                 intent.putExtra("content new", contentText);
+                intent.putExtra("id", id);
 
-                Log.i("check value title", title);
-                Log.i("check value title new", titleText);
+//                Log.i("check value title", title);
+                Log.i("check value title new", title);
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -84,7 +89,16 @@ public class UpdateActivity extends AppCompatActivity {
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               confirmDialog();
+                state = "DELETING";
+                Intent intent = new Intent();
+                intent.putExtra("state", state);
+                intent.putExtra("id", id);
+                Log.i("ID passed  ", id);
+                setResult(RESULT_OK, intent);
+
+               // confirmDialog();
+                finish();
+
 
             }
         });
@@ -100,7 +114,7 @@ public class UpdateActivity extends AppCompatActivity {
             title = getIntent().getStringExtra("title");
             content = getIntent().getStringExtra("content");
 
-            //setting data - works
+//            setting data - works
 
             titleInput.setText(title);
             contentInput.setText(content);
@@ -111,23 +125,23 @@ public class UpdateActivity extends AppCompatActivity {
         }
     }
 
-    void confirmDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + title + " ?");
-        builder.setMessage("Are you sure you want to delete "+ title + " ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
-                myDB.deleteOneRow(id);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.create().show();
-    }
+//    void confirmDialog(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Delete " + title + " ?");
+//        builder.setMessage("Are you sure you want to delete "+ title + " ?");
+//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+//                myDB.deleteOneRow(id);
+//            }
+//        });
+//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        builder.create().show();
+//    }
 }

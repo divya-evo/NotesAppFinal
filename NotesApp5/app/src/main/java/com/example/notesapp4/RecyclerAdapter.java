@@ -42,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //        this.context = context;
 //    }
 
-//    public RecyclerAdapter(Activity activity, Context context, ArrayList noteIdArray, ArrayList noteTitleArray, ArrayList noteContentArray) {
+    //    public RecyclerAdapter(Activity activity, Context context, ArrayList noteIdArray, ArrayList noteTitleArray, ArrayList noteContentArray) {
     public RecyclerAdapter(Activity activity, Context context, ArrayList<NoteItem> myValues) {
         this.activity = activity;
         this.context = context;
@@ -57,22 +57,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }
-    @Override
-    public int getItemViewType(int position) {
-        if(myValues.get(position).isShowMenu()){
-            return SHOW_MENU;
-        }else{
-            return HIDE_MENU;
-        }
-    }
+    //    public void setOnItemClickListener(OnItemClickListener listener){
+//        mListener = listener;
+//    }
+//    @Override
+//    public int getItemViewType(int position) {
+//        if(myValues.get(position).isShowMenu()){
+//            return SHOW_MENU;
+//        }else{
+//            return HIDE_MENU;
+//        }
+//    }
     @Override
 //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-        MyViewHolder mvh = new MyViewHolder(v, mListener);
+        MyViewHolder mvh = new MyViewHolder(v);
         return mvh;
 //        if(viewType==SHOW_MENU){
 //            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_list, parent, false);
@@ -87,7 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
 
 
-//    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    //    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 //       holder.noteIdText.setText(String.valueOf(noteIdArray.get(position)));
@@ -124,36 +124,46 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             public void onClick(View v) {
 
                 //int position = holder.getAdapterPosition();
-               // Log.i("check value",  myValues.get(position).getId());
+                // Log.i("check value",  myValues.get(position).getId());
 
                 Intent intent = new Intent(context, UpdateActivity.class);
-               // int position = holder.getAdapterPosition();
+                // int position = holder.getAdapterPosition();
                 NoteItem noteItem = new NoteItem();
                 Log.i("check value",  myValues.get(position).getTitle());
                 intent.putExtra("id", myValues.get(position).getId());
                 intent.putExtra("title", myValues.get(position).getTitle());
                 intent.putExtra("content", myValues.get(position).getContent());
                 intent.putExtra("note position", position);
+
+                if (myValues.get(position).getId() != null){
+                    Log.i("Id sent", myValues.get(position).getId());
+                }
+                else {
+                    Log.i("Id sent", "null");
+                }
+
+                Log.i("note positon sent", String.valueOf(position));
+
                 activity.startActivityForResult(intent, 3);
             }
         });
 
         //RecyclerEntity entity = list.get(position);
-      //  myValues.get(position);
-      //  if(holder != null){
-           // ((MyViewHolder)holder).noteTitle.setText(entity.getTitle());
+        //  myValues.get(position);
+        //  if(holder != null){
+        // ((MyViewHolder)holder).noteTitle.setText(entity.getTitle());
 //            ((MyViewHolder)holder).noteContent.setText(entity.getTitle());
 //            //((MyViewHolder)holder).imageView.setImageDrawable(context.getResources().getDrawable(entity.getImage()));
 
-            holder.container.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.container.setOnLongClickListener(new View.OnLongClickListener() {
 
-                @Override
-                public boolean onLongClick(View v) {
-                    showMenu(position);
-                    return true;
+            @Override
+            public boolean onLongClick(View v) {
+                showMenu(position);
+                return true;
 
-                }
-            });
+            }
+        });
 //
 //            ((MyViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -182,7 +192,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public int getItemCount() {
         //return list.size();
-       // return noteTitleArray.size();
+        // return noteTitleArray.size();
         return myValues.size();
     }
 
@@ -222,11 +232,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         TextView noteIdText, noteTitleText, noteContentText;
         public int position = 0;
 
-      //  ImageView imageView;
+        //  ImageView imageView;
         LinearLayout container;
         LinearLayout updateLayout;
 
-        public MyViewHolder(View itemView, final OnItemClickListener listener) {
+        public MyViewHolder(View itemView) {
             super(itemView);
             noteIdText = itemView.findViewById(R.id.id_input);
             noteTitleText = itemView.findViewById(R.id.note_title_text);
@@ -237,17 +247,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
             itemView.setClickable(true);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(listener != null){
+//                        int position = getAdapterPosition();
+//                        if(position != RecyclerView.NO_POSITION){
+//                            listener.onItemClick(position);
+//                        }
+//                    }
+//                }
+//            });
         }
     }
 //    public class MenuViewHolder extends RecyclerAdapter.MyViewHolder{

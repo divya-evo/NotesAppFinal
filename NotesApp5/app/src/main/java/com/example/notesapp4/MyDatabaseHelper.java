@@ -30,12 +30,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    String query = "CREATE TABLE " + TABLE_NAME +
-            "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_TITLE + " TEXT, " +
-            COLUMN_CONTENT + " TEXT); " ;
+        String query = "CREATE TABLE " + TABLE_NAME +
+                "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_TITLE + " TEXT, " +
+                COLUMN_CONTENT + " TEXT); " ;
 
-    db.execSQL(query);
+        db.execSQL(query);
 
 
 
@@ -70,7 +70,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 String content = cursor.getString(2);
 
                 // Add cursor row to storeNotes
-                storeNotes.add(new NoteItem( title, content, false));
+                storeNotes.add(new NoteItem( id, title, content, false));
             } while (cursor.moveToNext());
         }
         cursor.close();

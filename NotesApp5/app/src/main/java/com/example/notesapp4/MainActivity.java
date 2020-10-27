@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         container = findViewById(R.id.container);
         addButton = findViewById(R.id.add_button);
-        updateButton = findViewById(R.id.updateNote_button);
-        shareButton = findViewById(R.id.shareNote_button);
-        deleteButton = findViewById(R.id.deleteNote_button);
+//        updateButton = findViewById(R.id.updateNote_button);
+//        shareButton = findViewById(R.id.shareNote_button);
+//        deleteButton = findViewById(R.id.deleteNote_button);
 
         // night mode
         modeSwitch = findViewById(R.id.switch_mode);
@@ -128,18 +128,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
-
-                Log.i("check value",  myValues.get(position).getTitle());
-                intent.putExtra("id", myValues.get(position).getId());
-                intent.putExtra("title", myValues.get(position).getTitle());
-                intent.putExtra("content", myValues.get(position).getContent());
-                startActivityForResult(intent, 1);
-            }
-        });
+//        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+//
+//                Log.i("check value",  myValues.get(position).getTitle());
+//                intent.putExtra("id", myValues.get(position).getId());
+//                intent.putExtra("title", myValues.get(position).getTitle());
+//                intent.putExtra("content", myValues.get(position).getContent());
+//                startActivityForResult(intent, 1);
+//            }
+//        });
 
 
 
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (mLinearLayout.getVisibility()==View.INVISIBLE){
+                if (!mLinearLayout.isShown()){
                     expand();
                 }else{
                     collapse();
@@ -263,17 +263,53 @@ public class MainActivity extends AppCompatActivity {
                 myValues.add(newNote);
                 adapter.notifyItemInserted(myValues.indexOf(newNote));
                 newNote.setId(myDB.getNewestId());
+                Log.i("new note id", newNote.getId());
             }
         }
         //updating
         if(requestCode == 3){
             if (resultCode == RESULT_OK) {
-                String titleText = data.getStringExtra("title new");
-                String contentText = data.getStringExtra("content new");
-                int position = data.getIntExtra("note position", -1);
-                NoteItem updateNote = new NoteItem(titleText, contentText, false);
-                myDB.updateData(updateNote);
-                adapter.notifyDataSetChanged();
+                String state = data.getStringExtra("state");
+                if (state.equals("UPDATING")) {
+                    String titleText = data.getStringExtra("title new");
+                    String contentText = data.getStringExtra("content new");
+                    String id = data.getStringExtra("id");
+                    Log.i("ID passed back", id);
+                    NoteItem updateNote = null;
+
+                    // check each note for matching ID then break and reassign update note if matches
+                    for (NoteItem noteItem : myValues) {
+                        if (noteItem.getId().equals(id)) {
+                            Log.i("Note updated", "True");
+                            updateNote = noteItem;
+                        }
+                    }
+
+                    updateNote.setTitle(titleText);
+                    updateNote.setContent(contentText);
+                    myDB.updateData(updateNote);
+                    adapter.notifyItemChanged(myValues.indexOf(updateNote));
+                }
+                if (state.equals("DELETING")) {
+                    String id = data.getStringExtra("id");
+                    Log.i("ID passed back", id);
+                    NoteItem updateNote = null;
+
+                    // check each note for matching ID then break and reassign update note if matches
+                    for (NoteItem noteItem : myValues) {
+                        Log.i("note Id", noteItem.getId());
+                        if (noteItem.getId().equals(id)) {
+                            Log.i("Note deleted", "True");
+                            updateNote = noteItem;
+                        }
+                    }
+
+                    int notePos = myValues.indexOf(updateNote);
+                    myDB.deleteOneRow(updateNote.getId());
+                    myValues.remove(notePos);
+                    adapter.notifyItemRemoved(notePos);
+                }
+
             }
         }
     }
