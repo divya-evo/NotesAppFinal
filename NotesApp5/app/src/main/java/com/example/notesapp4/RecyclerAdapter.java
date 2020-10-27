@@ -124,10 +124,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             public void onClick(View v) {
 
                 //int position = holder.getAdapterPosition();
-                Log.i("check value",  myValues.get(position).getTitle());
+               // Log.i("check value",  myValues.get(position).getId());
 
                 Intent intent = new Intent(context, UpdateActivity.class);
-                int position = holder.getAdapterPosition();
+               // int position = holder.getAdapterPosition();
                 NoteItem noteItem = new NoteItem();
                 Log.i("check value",  myValues.get(position).getTitle());
                 intent.putExtra("id", myValues.get(position).getId());

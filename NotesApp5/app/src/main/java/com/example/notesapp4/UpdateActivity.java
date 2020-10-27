@@ -49,8 +49,11 @@ public class UpdateActivity extends AppCompatActivity {
                 String contentText = contentInput.getText().toString().trim();
 
                 Intent intent = new Intent();
-                intent.putExtra("Title Text Update", titleText);
-                intent.putExtra("Content Text Update", contentText);
+                intent.putExtra("title new", titleText);
+                intent.putExtra("content new", contentText);
+
+                Log.i("check value title", title);
+                Log.i("check value title new", titleText);
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -97,9 +100,8 @@ public class UpdateActivity extends AppCompatActivity {
             title = getIntent().getStringExtra("title");
             content = getIntent().getStringExtra("content");
 
-            //setting data
-            String titleText = titleInput.getText().toString().trim();
-            String contentText = contentInput.getText().toString().trim();
+            //setting data - works
+
             titleInput.setText(title);
             contentInput.setText(content);
 
