@@ -268,8 +268,8 @@ public class MainActivity extends AppCompatActivity {
         //updating
         if(requestCode == 3){
             if (resultCode == RESULT_OK) {
-                String titleText = data.getStringExtra("title");
-                String contentText = data.getStringExtra("content");
+                String titleText = data.getStringExtra("title new");
+                String contentText = data.getStringExtra("content new");
 
                 NoteItem updateNote = new NoteItem(titleText, contentText, false);
                 myDB.updateData(updateNote);
