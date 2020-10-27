@@ -9,8 +9,11 @@
     android:alpha="1"
     android:background="@color/background_light"
     android:padding="5dp"
+
+
     app:cardBackgroundColor="@color/item_light"
-    app:cardCornerRadius="4dp">
+    android:elevation="10dp"
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:id="@+id/container"
@@ -45,7 +48,7 @@
                 android:layout_weight="100"
                 android:text="TextView"
                 android:textColor="@color/text_light"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <!--            <CheckBox-->
@@ -60,7 +63,8 @@
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
                             android:id="@+id/note_imp"
-                            app:srcCompat="@drawable/important" />
+                            app:srcCompat="@drawable/important"
+                            android:visibility="invisible"/>
 
 
 
@@ -81,7 +85,7 @@
                 android:id="@+id/note_content_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginLeft="10dp"
                 android:text="TextView"
                 android:textColor="@color/text_light"
                 android:textSize="18sp" />

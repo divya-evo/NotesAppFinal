@@ -74,15 +74,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
         MyViewHolder mvh = new MyViewHolder(v);
         return mvh;
-//        View v;
-//        if(viewType==LIST_ITEM){
-//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
-//
-//        }else{
-//            v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_grid, parent, false);
-//
-//        }
-//        return new MyViewHolder(v);
+
     }
 
 
@@ -220,35 +212,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 //    }
 
 
-    @Override
-    public int getItemViewType (int position) {
-        if (isSwitchView){
-            return LIST_ITEM;
-        }else{
-            return GRID_ITEM;
-        }
-    }
-
-    public boolean toggleItemViewType () {
-        isSwitchView = !isSwitchView;
-        return isSwitchView;
-    }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView noteIdText, noteTitleText, noteContentText;
+        TextView  noteTitleText, noteContentText;
         public int position = 0;
 
-        //  ImageView imageView;
+
         LinearLayout container;
         LinearLayout updateLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-           // noteIdText = itemView.findViewById(R.id.id_input);
+
             noteTitleText = itemView.findViewById(R.id.note_title_text);
             noteContentText = itemView.findViewById(R.id.note_content_text);
-            //imageView = itemView.findViewById(R.id.imageView);
+
             container = itemView.findViewById(R.id.container);
             updateLayout = itemView.findViewById(R.id.updateLayout);
 

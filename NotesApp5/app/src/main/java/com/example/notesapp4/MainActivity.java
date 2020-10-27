@@ -15,6 +15,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
@@ -39,6 +40,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.notesapp4.R.style.AppThemeBlue;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<RecyclerEntity> list;
@@ -61,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     // collapsible menu
-    LinearLayout mLinearLayout;
+    LinearLayout mLinearLayout, nLinearLayout;
     LinearLayout mLinearLayoutHeader;
-    FloatingActionButton collapseButton;
+    FloatingActionButton collapseButton, colourButton, redButton, blueButton;
 
     // change layout
     boolean isList = true;
@@ -74,19 +77,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setTheme();
+       // Utils.onActivityCreateSetTheme(this);
+       // initTheme();
         setContentView(R.layout.activity_main);
+
+        ((FloatingActionButton) findViewById(R.id.btn_blue)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // getTheme().applyStyle(R.style.AppThemeBlue, true);
+                // applyCurrentTheme();
+
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerview);
         container = findViewById(R.id.container);
         addButton = findViewById(R.id.add_button);
         transformButton = findViewById(R.id.transform_button);
+        redButton = findViewById(R.id.btn_red);
+        blueButton = findViewById(R.id.btn_blue);
 
 
         // night mode
         modeSwitch = findViewById(R.id.switch_mode);
         sharedPreferences = getSharedPreferences(MyPreferences, Context.MODE_PRIVATE);
 
-        //copyDBToSDCard();
+
 
 
         /**************************************** DISPLAY DATA ****************************************/
@@ -103,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RecyclerAdapter(MainActivity.this, this, myValues);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        //initTheme();
 
         new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
 
@@ -237,11 +256,15 @@ public class MainActivity extends AppCompatActivity {
 //
         /**************************************** COLLAPSIBLE MENU ****************************************/
         mLinearLayout = (LinearLayout) findViewById(R.id.expandable);
+        nLinearLayout = findViewById(R.id.expandable2);
         //set visibility to GONE
         mLinearLayout.setVisibility(View.INVISIBLE);
-        mLinearLayoutHeader = (LinearLayout) findViewById(R.id.header);
-        collapseButton = findViewById(R.id.collapseButton);
+        nLinearLayout.setVisibility(View.INVISIBLE);
 
+        mLinearLayoutHeader = (LinearLayout) findViewById(R.id.header);
+
+        collapseButton = findViewById(R.id.collapseButton);
+        colourButton = findViewById(R.id.colour_button);
         collapseButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -253,9 +276,50 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        colourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!nLinearLayout.isShown()){
+                    expand2();
+                }else{
+                    collapse2();
+                }
+            }
+        });
     }
 
+    /**************************************** COLOUR CHANGE ****************************************/
+    public void onClick(View v)
+    {
+        // TODO Auto-generated method stub
+        switch (v.getId())
+        {
+            case R.id.btn_red:
+                Utils.changeToTheme(this, Utils.THEME_DEFAULT);
+                break;
+            case R.id.btn_blue:
+                Utils.changeToTheme(this, Utils.THEME_BLUE);
+                break;
 
+        }
+    }
+    private void initTheme(){
+        ((FloatingActionButton) findViewById(R.id.btn_blue)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                getTheme().applyStyle(AppThemeBlue, true);
+                setTheme(R.style.AppThemeBlue);
+                //applyCurrentTheme();
+            }
+        });
+    }
+
+    private void applyCurrentTheme() {
+        //For change current view on new theme
+        setContentView(R.layout.activity_main);
+
+        //initTheme();
+    }
 
 //    @Override
 //    public void onBackPressed() {
@@ -406,6 +470,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animator) {
                 //Height=0, but it set visibility to GONE
                 mLinearLayout.setVisibility(View.GONE);
+                nLinearLayout.setVisibility(View.GONE);
             }
 
             @Override
@@ -433,6 +498,64 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
                 layoutParams.height = value;
                 mLinearLayout.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
+
+    private void expand2() {
+        //set Visible
+        nLinearLayout.setVisibility(View.VISIBLE);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        nLinearLayout.measure(widthSpec, heightSpec);
+
+        ValueAnimator mAnimator = slideAnimator(0, nLinearLayout.getMeasuredHeight());
+        mAnimator.start();
+    }
+
+    private void collapse2() {
+        int finalHeight = nLinearLayout.getHeight();
+
+        ValueAnimator mAnimator = slideAnimator2(finalHeight, 0);
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                //Height=0, but it set visibility to GONE
+                nLinearLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+
+        });
+        mAnimator.start();
+    }
+
+    private ValueAnimator slideAnimator2(int start, int end) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = nLinearLayout.getLayoutParams();
+                layoutParams.height = value;
+                nLinearLayout.setLayoutParams(layoutParams);
             }
         });
         return animator;
