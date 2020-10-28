@@ -144,14 +144,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        colourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("on clicked", "colour");
-                Intent intent = new Intent();
-                startActivityForResult(intent, 4);
-            }
-        });
+//        colourButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("on clicked", "colour");
+//                Intent intent = new Intent();
+//                startActivityForResult(intent, 4);
+//            }
+//        });
 
 
 
@@ -362,10 +362,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        } if(requestCode == 4){
-            Log.i("on clicked", "coming here");
-            myDB.deleteAll();
-            myValues.clear();
         }
     }
 
