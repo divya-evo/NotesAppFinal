@@ -9,10 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="item_light">#CFA00F</color>
+    <color name="item_light">#DA5E5A</color>
     <color name="background_light">#2E2B2B</color>
-    <color name="add_light">#D11857</color>
-    <color name="text_light">#FF000000</color>
+    <color name="add_light2">#E2814D</color>
+    <color name="add_light">#FDB903</color>
+    <color name="text_light">#FFFFFF</color>
+    <color name="heading_light">#E4E4E4</color>
 
 
 

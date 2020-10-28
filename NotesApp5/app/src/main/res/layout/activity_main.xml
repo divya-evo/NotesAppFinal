@@ -30,7 +30,7 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="128dp"
         android:padding="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,49 +38,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/expandable2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="152dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/expandable2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="152dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="7dp"
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/btn_red"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:elevation="7dp"-->
 
-            app:backgroundTint="@color/red"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+<!--            app:backgroundTint="@color/red"></com.google.android.material.floatingactionbutton.FloatingActionButton>-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/blue">
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/btn_blue"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:backgroundTint="@color/blue">-->
 
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+<!--        </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:backgroundTint="@color/add_light"-->
-        <!--            android:id="@+id/btn_green"-->
-        <!--            >-->
-        <!--        </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:backgroundTint="@color/add_light"-->
-        <!--            android:id="@+id/btn_black"-->
-        <!--            >-->
-        <!--        </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
+<!--        &lt;!&ndash;        <com.google.android.material.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:backgroundTint="@color/add_light"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/btn_green"&ndash;&gt;-->
+<!--        &lt;!&ndash;            >&ndash;&gt;-->
+<!--        &lt;!&ndash;        </com.google.android.material.floatingactionbutton.FloatingActionButton>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <com.google.android.material.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:backgroundTint="@color/add_light"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/btn_black"&ndash;&gt;-->
+<!--        &lt;!&ndash;            >&ndash;&gt;-->
+<!--        &lt;!&ndash;        </com.google.android.material.floatingactionbutton.FloatingActionButton>&ndash;&gt;-->
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/expandable"
@@ -99,19 +99,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <Switch
-            android:id="@+id/switch_mode"
-            android:layout_width="131dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="41dp"
-            android:layout_marginLeft="41dp"
-            android:layout_marginBottom="48dp"
-            android:layout_weight="40"
-            android:switchPadding="-90dp"
 
-            android:text="Dark Mode"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/colour_button"
@@ -127,8 +115,8 @@
             app:backgroundTint="@color/add_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/recyclerview"
-            app:rippleColor="@color/white"
-            app:srcCompat="@drawable/color"
+            app:rippleColor="@color/black"
+            app:srcCompat="@drawable/delete"
             tools:ignore="VectorDrawableCompat" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -164,6 +152,19 @@
             app:rippleColor="@color/white"
             app:srcCompat="@drawable/add"
             tools:ignore="VectorDrawableCompat" />
+        <Switch
+            android:id="@+id/switch_mode"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="41dp"
+            android:layout_marginLeft="41dp"
+            android:layout_marginBottom="48dp"
+            android:layout_weight="40"
+            android:switchPadding="-90dp"
+            android:textColor="@color/heading_light"
+            android:text="Dark Mode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </LinearLayout>
 
@@ -184,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="30dp"
-            app:backgroundTint="@color/add_light"
+            app:backgroundTint="@color/add_light2"
             app:srcCompat="@drawable/settings"
             tools:ignore="VectorDrawableCompat" />
     </LinearLayout>

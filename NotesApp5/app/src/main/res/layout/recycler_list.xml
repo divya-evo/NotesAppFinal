@@ -46,10 +46,12 @@
 
                 android:layout_marginLeft="10dp"
                 android:layout_weight="100"
+                android:fontFamily="sans-serif"
                 android:text="TextView"
                 android:textColor="@color/text_light"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:typeface="normal" />
 
             <!--            <CheckBox-->
             <!--                android:id="@+id/note_checkBox"-->
@@ -84,11 +86,13 @@
             <TextView
                 android:id="@+id/note_content_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif"
                 android:text="TextView"
                 android:textColor="@color/text_light"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:typeface="normal" />
 
         </LinearLayout>
 

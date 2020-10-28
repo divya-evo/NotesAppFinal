@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30">
+        android:layout_weight="10">
 
 <!--        <EditText-->
 <!--            android:id="@+id/id_input2"-->
@@ -29,9 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="20"
+        android:layout_weight="70"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         >
 
         <EditText
@@ -40,29 +41,49 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            android:background="@drawable/rounded"
             android:ems="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="sans-serif"
             android:hint="Title"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="20"
+            android:padding="5dp"
+            android:textColor="@color/heading_light"
+            android:typeface="normal" />
 
-        <ScrollView
-            android:id="@+id/ScrollView01"
-            android:layout_width="match_parent"
-            android:layout_height="150dip">
+<!--        <ScrollView-->
+<!--            android:id="@+id/ScrollView01"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+
+<!--            >-->
 
         <EditText
             android:id="@+id/content_input2"
+            android:background="@drawable/rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_weight="3"
             android:ems="10"
             android:layout_margin="5dp"
             android:hint="Description"
             android:inputType="textMultiLine"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideOverlay"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:lines="8"
-            android:maxLines="10"
+            android:maxLines="15"
             android:minLines="6"
+            android:fontFamily="sans-serif"
+            android:typeface="normal"
+            android:textColor="@color/heading_light"
             android:scrollbars="vertical"/>
-        </ScrollView>
+
+<!--        </ScrollView>-->
 
     </LinearLayout>
 
@@ -70,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="20"
-        android:layout_marginTop="10dp"
+
         android:orientation="vertical"
 
         >
@@ -80,31 +101,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_margin="5dp"
+            android:layout_margin="2dp"
 
 
-            android:text="UPDATE"
+            android:text="SAVE"
             android:textColor="@color/text_light"
             app:backgroundTint="@color/item_light" />
 
-        <Button
-            android:id="@+id/deleteNote_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="DELETE"
-            android:textColor="@color/text_light"
-            app:backgroundTint="@color/item_light"
-            app:iconTint="@color/background_light" />
-        <Button
-            android:id="@+id/shareNote_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="SHARE"
-            android:textColor="@color/text_light"
-            app:backgroundTint="@color/item_light"
-            app:iconTint="@color/background_light" />
+            android:layout_marginTop="20dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/deleteNote_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="DELETE"
+                android:layout_weight="1"
+                android:textColor="@color/text_light"
+                app:backgroundTint="@color/item_light"
+                app:iconTint="@color/background_light" />
+
+            <Button
+                android:id="@+id/shareNote_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="SHARE"
+                android:layout_weight="1"
+                android:textColor="@color/text_light"
+                app:backgroundTint="@color/item_light"
+                app:iconTint="@color/background_light" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

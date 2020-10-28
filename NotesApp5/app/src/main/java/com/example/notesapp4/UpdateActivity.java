@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class UpdateActivity extends AppCompatActivity {
     EditText idInput, titleInput, contentInput;
-    Button updateNoteButton, deleteNoteButton, shareNoteButton;
+    Button updateNoteButton, deleteNoteButton, shareNoteButton, colourButton;
     String title, content, id;
     ArrayList<NoteItem> myValues = new ArrayList<>();
 
@@ -28,6 +29,7 @@ public class UpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         //idInput = findViewById(R.id.id_input2);
         titleInput = findViewById(R.id.title_input2);
@@ -35,19 +37,20 @@ public class UpdateActivity extends AppCompatActivity {
         updateNoteButton = findViewById(R.id.updateNote_button);
         shareNoteButton = findViewById(R.id.shareNote_button);
         deleteNoteButton = findViewById(R.id.deleteNote_button);
+        colourButton = findViewById(R.id.colour_button);
         // first this
         getAndSetIntentData();
 
         //set action bar
         ActionBar ab = getSupportActionBar();
-        if(ab != null){
+        if (ab != null) {
             ab.setTitle(title);
         }
 
         updateNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                state ="UPDATING";
+                state = "UPDATING";
                 String titleText = titleInput.getText().toString().trim();
                 String contentText = contentInput.getText().toString().trim();
 
@@ -80,7 +83,7 @@ public class UpdateActivity extends AppCompatActivity {
                 NoteItem shareNote = new NoteItem(titleText, contentText, false);
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 Log.i("sharing", shareNote.getTitle());
-                intent.putExtra(Intent.EXTRA_TEXT, "I would like to share my Note named: " + shareNote.getTitle() + "\n Here is the relevant information "
+                intent.putExtra(Intent.EXTRA_TEXT, "Note name: " + shareNote.getTitle() + "\nDescription: "
                         + shareNote.getContent());
                 intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, "Share Note"));
@@ -96,7 +99,7 @@ public class UpdateActivity extends AppCompatActivity {
                 Log.i("ID passed  ", id);
                 setResult(RESULT_OK, intent);
 
-               // confirmDialog();
+                // confirmDialog();
                 finish();
 
 
@@ -104,6 +107,9 @@ public class UpdateActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 
     void getAndSetIntentData(){
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title") && getIntent().hasExtra("content") ){
@@ -125,23 +131,23 @@ public class UpdateActivity extends AppCompatActivity {
         }
     }
 
-//    void confirmDialog(){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Delete " + title + " ?");
-//        builder.setMessage("Are you sure you want to delete "+ title + " ?");
-//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
-//                myDB.deleteOneRow(id);
-//            }
-//        });
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        builder.create().show();
-//    }
+    void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete " + title + " ?");
+        builder.setMessage("Are you sure you want to delete "+ title + " ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+                myDB.deleteOneRow(id);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
+    }
 }
